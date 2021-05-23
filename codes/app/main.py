@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'C:\Users\hanso\Desktop\Research_Folders\clutrr\clutrr_baselines')
+sys.path.append(r'/home/kangda/clutrr/')
 from comet_ml import Experiment, ExistingExperiment
 from codes.experiment.experiment import run_experiment
 from codes.utils.config import get_config
