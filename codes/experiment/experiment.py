@@ -77,6 +77,7 @@ def run_experiment(config, exp, resume=False):
     data_config = json.load(open(os.path.join(base_path, 'config.json')))
     # get the list of files in base path
     train_files = glob.glob(os.path.join(base_path, "*_train.csv"))
+    print(len(train_files))
     assert len(train_files) == 1  # make sure we have only one train file
     config.dataset.train_file = train_files[0]
     test_files = glob.glob(os.path.join(base_path, "*_test.csv"))
@@ -172,7 +173,7 @@ def run_experiment(config, exp, resume=False):
 
 
 def _run_epochs(experiment):
-    validation_metrics_dict = experiment.validation_metrics
+    validation_metrics_dict = experiment.vzalidation_metrics
     metric_to_perform_early_stopping = experiment.metric_to_perform_early_stopping
     config = experiment.config
     for key in validation_metrics_dict:
