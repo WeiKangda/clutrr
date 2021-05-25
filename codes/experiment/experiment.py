@@ -173,7 +173,7 @@ def run_experiment(config, exp, resume=False):
 
 
 def _run_epochs(experiment):
-    validation_metrics_dict = experiment.vzalidation_metrics
+    validation_metrics_dict = experiment.validation_metrics
     metric_to_perform_early_stopping = experiment.metric_to_perform_early_stopping
     config = experiment.config
     for key in validation_metrics_dict:
