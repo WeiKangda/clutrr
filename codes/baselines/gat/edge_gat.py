@@ -60,7 +60,7 @@ class EdgeGatConv(MessagePassing):
         # here, we should also append a set of [node x zeros] in the edge_attr
         # maybe they add self loops in order to propagate the messages coming from the node itself?
         edge_index = add_self_loops(edge_index, num_nodes=x.size(0))
-        self_loop_edges = torch.zeros(x.size(0), edge_attr.size(1)).to(edge_index)
+        self_loop_edges = torch.zeros(x.size(0), edge_attr.size(1)).to(edge_index.device)
         edge_attr = torch.cat([edge_attr, self_loop_edges], dim=0) # (500, 10)
 
         x = torch.mm(x, self.weight).view(-1, self.heads, self.out_channels)
