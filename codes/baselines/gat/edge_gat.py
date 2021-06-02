@@ -1,5 +1,6 @@
 # GAT with Edge features
 import torch
+from torch import Tensor
 from torch.nn import Parameter
 import torch.nn.functional as F
 from torch_geometric.nn.conv import MessagePassing
