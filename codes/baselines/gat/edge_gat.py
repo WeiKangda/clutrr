@@ -66,6 +66,7 @@ class EdgeGatConv(MessagePassing):
         #print(type(edge_index))
         #print(edge_index.dtype)
         #print(edge_index.shape)
+        print(isinstance(edge_index, Tensor))
         print(edge_index.dtype == torch.long)
         print(edge_index.dim() == 2)
         print(edge_index.size(0) == 2)
