@@ -62,6 +62,7 @@ class EdgeGatConv(MessagePassing):
         print(type(edge_index))
         edge_index, _ = add_self_loops(edge_index, num_nodes=x.size(0))
         #print(type(edge_index))
+        edge_index = edge_index.type(torch.LongTensor)
         self_loop_edges = torch.zeros(x.size(0), edge_attr.size(1)).to("cuda")
         edge_attr = torch.cat([edge_attr, self_loop_edges], dim=0) # (500, 10)
 
