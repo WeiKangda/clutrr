@@ -59,13 +59,16 @@ class EdgeGatConv(MessagePassing):
         # basically it performs this `edge_index = torch.cat([edge_index, loop], dim=1)`
         # here, we should also append a set of [node x zeros] in the edge_attr
         # maybe they add self loops in order to propagate the messages coming from the node itself?
-        print(type(edge_index))
+        #print(type(edge_index))
         edge_index, _ = add_self_loops(edge_index, num_nodes=x.size(0))
-        print(type(edge_index))
+        #print(type(edge_index))
         edge_index = edge_index.type(torch.cuda.LongTensor)
-        print(type(edge_index))
-        print(edge_index.dtype)
-        print(edge_index.shape)
+        #print(type(edge_index))
+        #print(edge_index.dtype)
+        #print(edge_index.shape)
+        print(assert edge_index.dtype == torch.long)
+        print(assert edge_index.dim() == 2)
+        print(assert edge_index.size(0) == 2)
         self_loop_edges = torch.zeros(x.size(0), edge_attr.size(1)).to("cuda")
         edge_attr = torch.cat([edge_attr, self_loop_edges], dim=0) # (500, 10)
 
