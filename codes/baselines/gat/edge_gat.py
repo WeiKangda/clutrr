@@ -66,9 +66,9 @@ class EdgeGatConv(MessagePassing):
         #print(type(edge_index))
         #print(edge_index.dtype)
         #print(edge_index.shape)
-        print(assert edge_index.dtype == torch.long)
-        print(assert edge_index.dim() == 2)
-        print(assert edge_index.size(0) == 2)
+        print(edge_index.dtype == torch.long)
+        print(edge_index.dim() == 2)
+        print(edge_index.size(0) == 2)
         self_loop_edges = torch.zeros(x.size(0), edge_attr.size(1)).to("cuda")
         edge_attr = torch.cat([edge_attr, self_loop_edges], dim=0) # (500, 10)
 
