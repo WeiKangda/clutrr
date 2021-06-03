@@ -66,7 +66,7 @@ class EdgeGatConv(MessagePassing):
         #edge_index = edge_index.type(torch.cuda.LongTensor)
         #print(type(edge_index))
         #print(edge_index.dtype)
-        #print(edge_index.shape)
+        print(edge_index.shape)
         print(isinstance(edge_index, Tensor))
         print(edge_index.dtype == torch.long)
         print(edge_index.dim() == 2)
@@ -75,7 +75,7 @@ class EdgeGatConv(MessagePassing):
         edge_attr = torch.cat([edge_attr, self_loop_edges], dim=0) # (500, 10)
 
         x = torch.mm(x, self.weight).view(-1, self.heads, self.out_channels)
-        return self.propagate('add', edge_index, x=x, num_nodes=x.size(0),edge_attr=edge_attr)
+        return self.propagate(edge_index, x=x, num_nodes=x.size(0),edge_attr=edge_attr)
 
     def message(self, x_i, x_j, edge_index, num_nodes, edge_attr):
         # x_i/x_j = E x out_channel, one message for each incoming edge
