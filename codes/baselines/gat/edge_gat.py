@@ -88,7 +88,7 @@ class EdgeGatConv(MessagePassing):
         print(edge_attr.shape)
         print(x_i.shape)
         print(x_j.shape)
-        x_j = torch.cat([x_j, edge_attr], dim=-1)
+        x_j = torch.cat([x_j, edge_attr], dim=1)
 
         # Compute attention coefficients.
         # N.B - only modification is the attention is now computed with the edge attributes
