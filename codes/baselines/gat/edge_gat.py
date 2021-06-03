@@ -85,6 +85,7 @@ class EdgeGatConv(MessagePassing):
         # first, repeat the edge attribute for each head
         edge_attr = edge_attr.unsqueeze(1).repeat(1, self.heads, 1)
         print(edge_attr.shape)
+        print(x_i.shape)
         print(x_j.shape)
         x_j = torch.cat([x_j, edge_attr], dim=-1)
 
