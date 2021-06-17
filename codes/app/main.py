@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'/home/kangda/clutrr/')
+sys.path.append(r'/playpen-ssd/kangda/clutrr/')
 from comet_ml import Experiment, ExistingExperiment
 from codes.experiment.experiment import run_experiment
 from codes.utils.config import get_config
