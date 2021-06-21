@@ -84,7 +84,7 @@ class EdgeGatConv(MessagePassing):
         # naive approach would be to append the edge dim to the messages
         # first, repeat the edge attribute for each head
         print(edge_attr.shape)
-        edge_attr = edge_attr.unsqueeze(0).repeat(300, 1, 5)
+        edge_attr = edge_attr.unsqueeze(1).repeat(1, self.heads, 1)
         print(edge_attr.shape)
         print(x_i.shape)
         print(x_j.shape)
