@@ -73,7 +73,10 @@ class EdgeGatConv(MessagePassing):
         # our edge attributes are E x edge_dim
         # naive approach would be to append the edge dim to the messages
         # first, repeat the edge attribute for each head
+        print(edge_attr.shape)
         edge_attr = edge_attr.unsqueeze(1).repeat(1, self.heads, 1)
+        print(edge_attr.shape)
+        print(x_j.shape)
         x_j = torch.cat([x_j, edge_attr], dim=-1)
 
         # Compute attention coefficients.
