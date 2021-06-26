@@ -60,22 +60,12 @@ class EdgeGatConv(MessagePassing):
         # basically it performs this `edge_index = torch.cat([edge_index, loop], dim=1)`
         # here, we should also append a set of [node x zeros] in the edge_attr
         # maybe they add self loops in order to propagate the messages coming from the node itself?
-        #print(type(edge_index))
-        edge_index, _ = add_self_loops(edge_index, num_nodes=x.size(0))
-        #print(type(edge_index))
-        #edge_index = edge_index.type(torch.cuda.LongTensor)
-        #print(type(edge_index))
-        #print(edge_index.dtype)
-        print(edge_index.shape)
-        print(isinstance(edge_index, Tensor))
-        print(edge_index.dtype == torch.long)
-        print(edge_index.dim() == 2)
-        print(edge_index.size(0) == 2)
+        edge_index = add_self_loops(edge_index, num_nodes=x.size(0))
         self_loop_edges = torch.zeros(x.size(0), edge_attr.size(1)).to("cuda:0")
         edge_attr = torch.cat([edge_attr, self_loop_edges], dim=0) # (500, 10)
-        print(edge_attr.shape)    
+
         x = torch.mm(x, self.weight).view(-1, self.heads, self.out_channels)
-        return self.propagate('add',edge_index, x=x, num_nodes=x.size(0),edge_attr=edge_attr)
+        return self.propagate('add', edge_index, x=x, num_nodes=x.size(0),edge_attr=edge_attr)
 
     def message(self, x_i, x_j, edge_index, num_nodes, edge_attr):
         # x_i/x_j = E x out_channel, one message for each incoming edge
@@ -83,11 +73,7 @@ class EdgeGatConv(MessagePassing):
         # our edge attributes are E x edge_dim
         # naive approach would be to append the edge dim to the messages
         # first, repeat the edge attribute for each head
-        print(edge_attr.shape)
         edge_attr = edge_attr.unsqueeze(1).repeat(1, self.heads, 1)
-        print(edge_attr.shape)
-        print(x_i.shape)
-        print(x_j.shape)
         x_j = torch.cat([x_j, edge_attr], dim=-1)
 
         # Compute attention coefficients.
@@ -101,6 +87,7 @@ class EdgeGatConv(MessagePassing):
             alpha = F.dropout(alpha, p=self.dropout, training=True)
 
         return x_j * alpha.view(-1, self.heads, 1)
+
 
     def update(self, aggr_out):
         if self.concat is True:
